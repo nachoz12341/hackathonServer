@@ -6,14 +6,15 @@
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <style>
-        body { padding-top:50px; padding-left:50px; padding-right:50px}
+        body { padding-top:16px; padding-left:16px; padding-right:16px}
     </style>
     <script>
             function loadedPage(){
-            //document.getElementById("temperature").innerHTML =localStorage.getItem('temperature');
-            //document.getElementById("height").innerHTML = localStorage.getItem('height');
+            if({{temperature}}>=78)
+                document.getElementById("temperatureStatus").innerHTML = "Warning we are above optimal temperatures! Irrigation system turning on.";
+            waterImg.src = "./corn.jpg";
             console.log("load");
-            timedRefresh(500);
+            timedRefresh(1000);
         }
     
         function timedRefresh(timeoutPeriod) {
@@ -21,19 +22,45 @@
         }
         </script>
 </head>
+
+<script>
+    var waterImg = new Image();
+
+    waterImg.onload = function()
+    {
+        var c = document.getElementById("waterCanvas");
+        var ctx = c.getContext("2d");
+        ctx.drawImage(waterImg,0,0,c.width,c.height);
+    }
+
+</script>
+
 <body onload="loadedPage()">
-    
+    <div class="header" style="color:white; background:green; padding-top:20px; padding-left:8px; padding-right:8px; border-radius:10px;">
+        <h1>Crop Shop</h1>
+    </div>
+
     <div class="container">
         <div class="jumbotron">
             <p id="info">
-                Temperature is :
+                Soil temperature is :
                 <span>{{temperature}} </span>
-                <br>Height is: 
+                F
+                <br><font color="red"><span id="temperatureStatus"></span></font>
+                <br>Current crop height: 
                 <span>{{height}} </span>
-                
+                 inches                
               </p>
         </div>
     </div>
 
+    <div class="container">
+    <div class="jumbotron" style="padding-top:8px; padding-left:16px; padding-right:16px;">
+    <div class="text-center" style="padding-top:32px;">
+            <canvas id="waterCanvas" width="600px" height="300px"></canvas>
+    </div>
+    </div>
+    </div>
 </body>
+
 </html>

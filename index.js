@@ -6,6 +6,9 @@ const path = require('path');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('view engine', 'hbs');
+var htmlPath = path.join(__dirname + "/views");
+
+app.use(express.static(htmlPath));
 
 if (typeof localStorage === "undefined" || localStorage === null) {
         var LocalStorage = require('node-localstorage').LocalStorage;
@@ -14,7 +17,7 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 app.get('/', (req, res) => {
         //res.send("Height: "+localStorage.getItem('height')+" Temperature: "+localStorage.getItem('temperature'));
-        var dataToRender = {"height":+localStorage.getItem('height'),"temperature":+localStorage.getItem('temperature')};
+        var dataToRender = {"height":+localStorage.getItem('height'),"temperature":+localStorage.getItem('temperature'),};
         res.render('page',dataToRender);
 });
 
