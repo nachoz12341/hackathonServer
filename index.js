@@ -5,19 +5,21 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-var type = 0;
-var message = "";
+if (typeof localStorage === "undefined" || localStorage === null) {
+        var LocalStorage = require('node-localstorage').LocalStorage;
+        localStorage = new LocalStorage('./scratch');
+}
 
 app.get('/', (req, res) => {
-        res.send("type: "+type+" message: "+message);
+        res.send("Height: "+localStorage.getItem('height')+" Temperature: "+localStorage.getItem('temperature'));
 });
 
 app.post('/sensorData', (req,res) => {
-        type = req.body.type;
-        message = req.body.message;
+        if(req.body.type==0)
+                localStorage.setItem('height', req.body.message);
+        else
+                localStorage.setItem('temperature', req.body.message);
 
-        console.log(type);
-        console.log(message);  
         res.sendStatus(200);      
 });
 
