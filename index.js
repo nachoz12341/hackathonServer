@@ -6,7 +6,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-        res.send("Hello world!");
+        res.send("Hello daniel!");
 });
 
 const port = process.env.PORT || 1337;
