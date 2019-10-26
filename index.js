@@ -5,13 +5,16 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+var type = 0;
+var message = "";
+
 app.get('/', (req, res) => {
-        res.send("Hello daniel!");
+        res.send("type: "+type+" message: "+message);
 });
 
 app.post('/sensorData', (req,res) => {
-        const type = req.body.type;
-        const message = req.body.message;
+        type = req.body.type;
+        message = req.body.message;
 
         console.log(type);
         console.log(message);  
